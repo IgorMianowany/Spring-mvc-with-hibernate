@@ -7,7 +7,7 @@
         <packaging>war</packaging>
       </options>
     </properties>
-    <root id="archive" name="Spring-mvc-with-hibernate-1.0-SNAPSHOT.war">
+    <root id="archive" name="spring-web-customer-tracker.war">
       <element id="artifact" artifact-name="Spring-mvc-with-hibernate:war exploded" />
     </root>
   </artifact>
