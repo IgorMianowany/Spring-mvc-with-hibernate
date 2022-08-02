@@ -1,4 +1,4 @@
-package com.spring.testdb;
+package testdb;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
