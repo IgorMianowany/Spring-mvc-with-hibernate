@@ -5,7 +5,6 @@
   Time: 12:13
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
@@ -39,12 +38,17 @@
                     <c:url var="updateLink" value="/customer/showFormForUpdate">
                         <c:param name="customerId" value="${customer.id}"/>
                     </c:url>
+                    <c:url var="deleteLink" value="/customer/deleteUser">
+                        <c:param name="customerId" value="${customer.id}"/>
+                    </c:url>
                     <tr>
                         <td> ${customer.firstName}</td>
                         <td> ${customer.lastName}</td>
                         <td> ${customer.email}</td>
                         <td>
                             <a href="${updateLink}">Update</a>
+                            <a> | </a>
+                            <a href="${deleteLink}">Delete</a>
                         </td>
                     </tr>
 
