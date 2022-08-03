@@ -18,8 +18,8 @@ public class CustomerServiceImpl implements CustomerService{
     CustomerDAO customerDAO;
 
     @Override
-    public List<Customer> getCustomers() {
-        return customerDAO.getCustomers();
+    public List<Customer> getCustomers(int sortField) {
+        return customerDAO.getCustomers(sortField);
     }
 
     @Override

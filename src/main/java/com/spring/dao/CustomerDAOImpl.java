@@ -1,6 +1,7 @@
 package com.spring.dao;
 
 import com.spring.entity.Customer;
+import com.spring.utils.SortUtils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -18,13 +19,29 @@ public class CustomerDAOImpl implements CustomerDAO{
     private SessionFactory sessionFactory;
 
     @Override
-    public List<Customer> getCustomers() {
+    public List<Customer> getCustomers(int sortField) {
 
-        // get current session
         Session session = sessionFactory.getCurrentSession();
 
-        // return query with list of customers from db
-        return session.createQuery("from Customer c order by c.lastName ", Customer.class).getResultList();
+        String fieldName = null;
+
+        switch (sortField) {
+            case SortUtils.FIRST_NAME:
+                fieldName = "firstName";
+                break;
+            case SortUtils.EMAIL:
+                fieldName = "email";
+                break;
+            default:
+                fieldName = "lastName";
+        }
+
+        String queryString = "from Customer order by " + fieldName;
+        Query<Customer> theQuery = session.createQuery(queryString, Customer.class);
+
+        List<Customer> customers = theQuery.getResultList();
+
+        return customers;
     }
 
     @Override
@@ -58,7 +75,7 @@ public class CustomerDAOImpl implements CustomerDAO{
             query.setParameter("searchName", "%" + searchName.toLowerCase() + "%");
         }
         else {
-            return getCustomers();
+            return getCustomers(SortUtils.LAST_NAME);
         }
 
         return (List<Customer>) query.getResultList();

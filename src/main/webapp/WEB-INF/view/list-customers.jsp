@@ -7,6 +7,7 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ page import="com.spring.utils.SortUtils" %>
 <html>
 <head>
     <title>Customers list</title>
@@ -35,19 +36,35 @@
             </form:form>
 
             <table>
+                <c:url var="sortLinkFirstName" value="/customer/list">
+                    <c:param name="sort" value="<%= Integer.toString(SortUtils.FIRST_NAME) %>" />
+                </c:url>
+
+                <c:url var="sortLinkLastName" value="/customer/list">
+                    <c:param name="sort" value="<%= Integer.toString(SortUtils.LAST_NAME) %>" />
+                </c:url>
+
+                <c:url var="sortLinkEmail" value="/customer/list">
+                    <c:param name="sort" value="<%= Integer.toString(SortUtils.EMAIL) %>" />
+                </c:url>
+
                 <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
+                    <th><a href="${sortLinkFirstName}">First Name</a></th>
+                    <th><a href="${sortLinkLastName}">Last Name</a></th>
+                    <th><a href="${sortLinkEmail}">Email</a></th>
                     <th>Action</th>
                 </tr>
                 <c:forEach var="customer" items="${customers}">
                     <c:url var="updateLink" value="/customer/showFormForUpdate">
                         <c:param name="customerId" value="${customer.id}"/>
                     </c:url>
+
                     <c:url var="deleteLink" value="/customer/delete">
                         <c:param name="customerId" value="${customer.id}"/>
                     </c:url>
+
+
+
                     <tr>
                         <td> ${customer.firstName}</td>
                         <td> ${customer.lastName}</td>
@@ -60,6 +77,8 @@
                                 Delete</a>
                         </td>
                     </tr>
+
+
 
                 </c:forEach>
             </table>
