@@ -1,6 +1,5 @@
 package com.spring.controller;
 
-import com.spring.dao.CustomerDAO;
 import com.spring.entity.Customer;
 import com.spring.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,11 +59,21 @@ public class CustomerController {
         return "customer-form";
     }
 
-    @RequestMapping("/deleteUser")
+    @RequestMapping("/delete")
     public String deleteUser(@RequestParam("customerId") int id){
         customerService.deleteCustomer(id);
 
         return "redirect:/customer/list";
+    }
+
+    @GetMapping("/search")
+    public String searchUser(@RequestParam("searchName") String searchName, Model model){
+
+        List<Customer> customers = customerService.searchCustomers(searchName);
+
+        model.addAttribute("customers", customers);
+
+        return "list-customers";
     }
 
 
