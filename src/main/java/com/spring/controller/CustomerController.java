@@ -19,7 +19,6 @@ public class CustomerController {
 
     @RequestMapping("/list")
     public String listCustomers(Model model, @RequestParam(required = false) String sort){
-
         // get customers from service
         List<Customer> customers = null;
 
