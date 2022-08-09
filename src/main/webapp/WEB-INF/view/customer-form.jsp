@@ -48,8 +48,8 @@
                 </tr>
 
                 <tr>
-                    <td><label>Email:</label></td>
-                    <td><form:input path="email"/></td>
+                    <td><label>Role:</label></td>
+                    <td><form:input path="role"/></td>
                 </tr>
 
                 <tr>

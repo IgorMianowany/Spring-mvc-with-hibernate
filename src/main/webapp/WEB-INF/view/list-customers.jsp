@@ -44,14 +44,14 @@
                     <c:param name="sort" value="<%= Integer.toString(SortUtils.LAST_NAME) %>" />
                 </c:url>
 
-                <c:url var="sortLinkEmail" value="/customer/list">
-                    <c:param name="sort" value="<%= Integer.toString(SortUtils.EMAIL) %>" />
+                <c:url var="sortLinkRole" value="/customer/list">
+                    <c:param name="sort" value="<%= Integer.toString(SortUtils.ROLE) %>" />
                 </c:url>
 
                 <tr>
                     <th><a href="${sortLinkFirstName}">First Name</a></th>
                     <th><a href="${sortLinkLastName}">Last Name</a></th>
-                    <th><a href="${sortLinkEmail}">Email</a></th>
+                    <th><a href="${sortLinkRole}">Role</a></th>
                     <th>Action</th>
                 </tr>
                 <c:forEach var="customer" items="${customers}">
@@ -68,7 +68,7 @@
                     <tr>
                         <td> ${customer.firstName}</td>
                         <td> ${customer.lastName}</td>
-                        <td> ${customer.email}</td>
+                        <td> ${customer.role}</td>
                         <td>
                             <a href="${updateLink}">Update</a>
                              |
@@ -84,6 +84,11 @@
             </table>
         </div>
     </div>
+
+    <form:form action="${pageContext.request.contextPath}/logout" method="post">
+        <input type="submit" value="Logout"/>
+    </form:form>
+
 
 </body>
 </html>

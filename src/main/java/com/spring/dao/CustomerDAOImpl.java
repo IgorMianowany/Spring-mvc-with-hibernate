@@ -28,8 +28,8 @@ public class CustomerDAOImpl implements CustomerDAO{
             case SortUtils.FIRST_NAME:
                 fieldName = "firstName";
                 break;
-            case SortUtils.EMAIL:
-                fieldName = "email";
+            case SortUtils.ROLE:
+                fieldName = "role";
                 break;
             default:
                 fieldName = "lastName";
