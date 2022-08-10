@@ -8,6 +8,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="com.spring.utils.SortUtils" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+
 <html>
 <head>
     <title>Customers list</title>
@@ -21,6 +23,13 @@
         </div>
     </div>
     <div id="container">
+        <hr>
+        <p>
+            User: <security:authentication property="principal.username"/>
+            <br><br>
+            Role (s): <security:authentication property="principal.authorities"/>
+        </p>
+        <hr>
         <div id="content">
 
             <input type="button" value="Add customer"
@@ -85,6 +94,17 @@
         </div>
     </div>
 
+    <hr>
+
+    <p>
+        <a href="${pageContext.request.contextPath}/customer/leaders">Leadership meeting</a>
+        <br>
+        <a href="${pageContext.request.contextPath}/customer/systems">Admin meeting</a>
+    </p>
+
+    <hr>
+
+    <br><br>
     <form:form action="${pageContext.request.contextPath}/logout" method="post">
         <input type="submit" value="Logout"/>
     </form:form>

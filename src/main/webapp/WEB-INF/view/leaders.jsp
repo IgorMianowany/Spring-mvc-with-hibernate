@@ -1,5 +1,4 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<% response.sendRedirect("/customer/list"); %>
 
 <!DOCTYPE html>
 <html>
@@ -11,5 +10,7 @@
 </h1>
 <br/>
 <a href="TestDbServlet">Hello Servlet</a>
+<br>
+<a href="${pageContext.request.contextPath}/customer/list">Back to list</a>
 </body>
 </html>
