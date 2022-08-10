@@ -8,8 +8,7 @@ import com.spring.utils.SortUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,5 +33,62 @@ public class IssueController {
         return "list-issues";
     }
 
+    @GetMapping("/showFormForIssueAdd")
+    public String showFormForAdd(Model model){
+
+        Issue issue = new Issue();
+
+        model.addAttribute("issue", issue);
+
+        return "issue-form";
+    }
+
+    @PostMapping("/saveIssue")
+    public String saveCustomer(@ModelAttribute("issue") Issue issue){
+
+        issueService.saveIssue(issue);
+
+        return "redirect:/issue/list";
+    }
+
+    @RequestMapping("/showFormForIssueUpdate")
+    public String showFormForUpdate(@RequestParam("issueId") int id, Model model){
+
+        // get customer from service
+        Issue issue = issueService.getIssue(id);
+
+        // set customer as a model attribute to prepopulate form
+        model.addAttribute("issue", issue);
+
+        // send to form
+        return "issue-form";
+    }
+
+    @RequestMapping("/delete")
+    public String deleteIssue(@RequestParam("issueId") int id){
+        issueService.deleteIssue(id);
+
+        return "redirect:/issue/list";
+    }
+
+    @GetMapping("/search")
+    public String searchIssue(@RequestParam("searchName") String searchName, Model model){
+
+        List<Issue> issues = issueService.searchIssue(searchName);
+
+        model.addAttribute("issues", issues);
+
+        return "list-issues";
+    }
+
+    @RequestMapping("/leaders")
+    public String leaders(){
+        return "leaders";
+    }
+
+    @RequestMapping("/systems")
+    public String systems(){
+        return "systems";
+    }
 
 }

@@ -56,11 +56,11 @@ public class IssueDAOImpl implements IssueDAO {
         if(!searchName.isBlank()){
             query = session.createQuery("from Issue where lower(description) like :searchName", Issue.class);
             query.setParameter("searchName", "%" + searchName.toLowerCase() + "%");
+
         }
         else {
             return getIssues();
         }
-
         return (List<Issue>) query.getResultList();
     }
 }

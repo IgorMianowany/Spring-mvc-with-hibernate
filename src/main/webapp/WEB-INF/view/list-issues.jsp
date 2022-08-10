@@ -31,14 +31,14 @@
         <hr>
         <div id="content">
 
-            <input type="button" value="Add customer"
-                   onclick="window.location.href='showFormForAdd';
+            <input type="button" value="Add issue"
+                   onclick="window.location.href='showFormForIssueAdd';
                    return false;"
                    class="add-button"
             />
 
             <form:form action="search" method="GET">
-                Search customer: <input type="text" name="searchName"/>
+                Search issue: <input type="text" name="searchName"/>
 
                 <input type="submit" value="Search" class="add-button"/>
             </form:form>
@@ -48,16 +48,16 @@
                 <tr>
                     <th><a>ID</a></th>
                     <th><a>Description</a></th>
-                    <th><a>Customer id</a></th>
+                    <th><a>Customer Name</a></th>
                     <th>Status</th>
                     <th>Action</th>
                 </tr>
                 <c:forEach var="issue" items="${issues}">
-                    <c:url var="updateLink" value="/customer/showFormForUpdate">
+                    <c:url var="updateLink" value="/issue/showFormForIssueUpdate">
                         <c:param name="issueId" value="${issue.id}"/>
                     </c:url>
 
-                    <c:url var="deleteLink" value="/customer/delete">
+                    <c:url var="deleteLink" value="/issue/delete">
                         <c:param name="issueId" value="${issue.id}"/>
                     </c:url>
 
@@ -66,7 +66,7 @@
                     <tr>
                         <td> ${issue.id}</td>
                         <td> ${issue.description}</td>
-                        <td> ${issue.customer}</td>
+                        <td> ${issue.customer.firstName} ${issue.customer.lastName}</td>
                         <td> ${issue.status}</td>
                         <td>
                             <a href="${updateLink}">Update</a>

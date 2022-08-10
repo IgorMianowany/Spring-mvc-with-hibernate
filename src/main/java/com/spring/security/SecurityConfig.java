@@ -27,7 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .password("test123")
                         .roles("MANAGER","EMPLOYEE"))
                 .withUser(userBuilder
-                        .username("susan")
+                        .username("david")
                         .password("test123")
                         .roles("ADMIN", "EMPLOYEE"));
 
@@ -40,6 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").hasRole("EMPLOYEE")
                 .antMatchers("/customer/leaders/**").hasRole("MANAGER")
                 .antMatchers("/customer/systems/**").hasRole("ADMIN")
+                .antMatchers("/issue/delete/**").hasRole("ADMIN")
                 .and()
                 .formLogin().permitAll()
                 .and()

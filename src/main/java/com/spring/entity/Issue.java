@@ -1,6 +1,11 @@
 package com.spring.entity;
 
+import com.spring.config.AppConfig;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
 import javax.persistence.*;
+import java.lang.annotation.Annotation;
 
 @Entity
 @Table(name = "issue")
@@ -61,8 +66,9 @@ public class Issue {
         return customer;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setCustomer(int id) {
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+        this.customer = context.getBean(Customer.class,id);
     }
 
     public String getStatus() {
