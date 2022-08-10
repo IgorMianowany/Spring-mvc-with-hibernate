@@ -2,6 +2,7 @@ package com.spring.config;
 
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import com.spring.dao.IssueDAO;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -55,6 +56,11 @@ public class AppConfig implements WebMvcConfigurer {
         dataSource.setMaxIdleTime(30000);
         return dataSource;
     }
+
+//    @Bean
+//    public IssueDAO issueDAO(){
+//
+//    }
 
     @Bean
     public LocalSessionFactoryBean sessionFactory() throws PropertyVetoException {

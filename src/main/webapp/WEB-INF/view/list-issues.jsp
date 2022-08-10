@@ -7,19 +7,18 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page import="com.spring.utils.SortUtils" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <html>
 <head>
-    <title>Customers list</title>
+    <title>Issue list</title>
 
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css"/>
 </head>
 <body>
     <div id="wrapper">
         <div id="header">
-            <h2>CRM - Customer Relationship Manager</h2>
+            <h2>Issue database</h2>
         </div>
     </div>
     <div id="container">
@@ -45,50 +44,38 @@
             </form:form>
 
             <table>
-                <c:url var="sortLinkFirstName" value="/customer/list">
-                    <c:param name="sort" value="<%= Integer.toString(SortUtils.FIRST_NAME) %>" />
-                </c:url>
-
-                <c:url var="sortLinkLastName" value="/customer/list">
-                    <c:param name="sort" value="<%= Integer.toString(SortUtils.LAST_NAME) %>" />
-                </c:url>
-
-                <c:url var="sortLinkRole" value="/customer/list">
-                    <c:param name="sort" value="<%= Integer.toString(SortUtils.ROLE) %>" />
-                </c:url>
 
                 <tr>
-                    <th><a href="${sortLinkFirstName}">First Name</a></th>
-                    <th><a href="${sortLinkLastName}">Last Name</a></th>
-                    <th><a href="${sortLinkRole}">Role</a></th>
+                    <th><a>ID</a></th>
+                    <th><a>Description</a></th>
+                    <th><a>Customer id</a></th>
+                    <th>Status</th>
                     <th>Action</th>
                 </tr>
-                <c:forEach var="customer" items="${customers}">
+                <c:forEach var="issue" items="${issues}">
                     <c:url var="updateLink" value="/customer/showFormForUpdate">
-                        <c:param name="customerId" value="${customer.id}"/>
+                        <c:param name="issueId" value="${issue.id}"/>
                     </c:url>
 
                     <c:url var="deleteLink" value="/customer/delete">
-                        <c:param name="customerId" value="${customer.id}"/>
+                        <c:param name="issueId" value="${issue.id}"/>
                     </c:url>
 
 
 
                     <tr>
-                        <td> ${customer.firstName}</td>
-                        <td> ${customer.lastName}</td>
-                        <td> ${customer.role}</td>
+                        <td> ${issue.id}</td>
+                        <td> ${issue.description}</td>
+                        <td> ${issue.customer}</td>
+                        <td> ${issue.status}</td>
                         <td>
                             <a href="${updateLink}">Update</a>
                              |
                             <a href="${deleteLink}"
-                                onclick="if(!(confirm('Are you sure you want to delete this customer?')))return false">
+                                onclick="if(!(confirm('Are you sure you want to delete this issue?')))return false">
                                 Delete</a>
                         </td>
                     </tr>
-
-
-
                 </c:forEach>
             </table>
         </div>
@@ -101,7 +88,7 @@
         <br>
         <a href="${pageContext.request.contextPath}/customer/systems">Admin meeting</a>
         <br>
-        <a href="${pageContext.request.contextPath}/issue/list">Issues</a>
+        <a href="${pageContext.request.contextPath}/customer/list">Customer list</a>
     </p>
 
     <hr>

@@ -2,7 +2,7 @@ package com.spring.utils;
 
 public interface SortUtils {
 
-    public static final int FIRST_NAME = 1;
-    public static final int LAST_NAME = 2;
-    public static final int ROLE = 3;
+    int FIRST_NAME = 1;
+    int LAST_NAME = 2;
+    int ROLE = 3;
 }
