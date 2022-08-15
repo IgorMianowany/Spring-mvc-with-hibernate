@@ -32,11 +32,14 @@
         <hr>
         <div id="content">
 
-            <input type="button" value="Add customer"
-                   onclick="window.location.href='showFormForAdd';
-                   return false;"
-                   class="add-button"
-            />
+            <security:authorize access="hasAnyRole('MANAGER', 'ADMIN')">
+                <!-- put new button: Add Customer -->
+                <input type="button" value="Add Customer"
+                       onclick="window.location.href='showFormForAdd';
+                       return false;"
+                       class="add-button"
+                />
+            </security:authorize>
 
             <form:form action="search" method="GET">
                 Search customer: <input type="text" name="searchName"/>

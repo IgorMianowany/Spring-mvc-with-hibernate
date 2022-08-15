@@ -2,30 +2,39 @@ package com.spring.config;
 
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-import com.spring.dao.IssueDAO;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.hibernate.SessionFactory;
+import org.springframework.core.env.Environment;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.*;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
-import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
-
+import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
 import java.util.Properties;
+import java.util.logging.Logger;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "com.spring")
 @EnableAspectJAutoProxy
 @EnableTransactionManagement
+@PropertySource({"classpath:persistence-mysql.properties", "classpath:security-persistence-mysql.properties"})
 public class AppConfig implements WebMvcConfigurer {
+
+    @Autowired
+    private Environment env;
+
+    private final Logger logger = Logger.getLogger(getClass().getName());
 
     @Bean
     public ViewResolver viewResolver(){
@@ -44,51 +53,109 @@ public class AppConfig implements WebMvcConfigurer {
                 .addResourceLocations("/resources/");
     }
 
-    @Bean
-    public ComboPooledDataSource dataSource() throws PropertyVetoException {
-        ComboPooledDataSource dataSource = new ComboPooledDataSource();
-        dataSource.setDriverClass("com.mysql.cj.jdbc.Driver");
-        dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/web_customer_tracker?useSSL=false&serverTimezone=UTC");
-        dataSource.setUser("springstudent");
-        dataSource.setPassword("springstudent");
-        dataSource.setMinPoolSize(5);
-        dataSource.setMaxPoolSize(20);
-        dataSource.setMaxIdleTime(30000);
-        return dataSource;
-    }
-
-//    @Bean
-//    public IssueDAO issueDAO(){
 //
+//    @Bean
+//    public ComboPooledDataSource dataSource() throws PropertyVetoException {
+//        ComboPooledDataSource dataSource = new ComboPooledDataSource();
+//        dataSource.setDriverClass("com.mysql.cj.jdbc.Driver");
+//        dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/web_customer_tracker?useSSL=false&serverTimezone=UTC");
+//        dataSource.setUser("springstudent");
+//        dataSource.setPassword("springstudent");
+//        dataSource.setMinPoolSize(5);
+//        dataSource.setMaxPoolSize(20);
+//        dataSource.setMaxIdleTime(30000);
+//        return dataSource;
 //    }
 
     @Bean
-    public LocalSessionFactoryBean sessionFactory() throws PropertyVetoException {
-        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-        sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan("com.spring.entity");
-        sessionFactory.setHibernateProperties(hibernateProperties());
+    public DataSource myDataSource() {
+        ComboPooledDataSource myDataSource = new ComboPooledDataSource();
+        try {
+            myDataSource.setDriverClass("com.mysql.jdbc.Driver");
+        }
+        catch (PropertyVetoException exc) {
+            throw new RuntimeException(exc);
+        }
+        logger.info("jdbc.url=" + env.getProperty("jdbc.url"));
+        logger.info("jdbc.user=" + env.getProperty("jdbc.user"));
+        myDataSource.setJdbcUrl(env.getProperty("jdbc.url"));
+        myDataSource.setUser(env.getProperty("jdbc.user"));
+        myDataSource.setPassword(env.getProperty("jdbc.password"));
+        myDataSource.setInitialPoolSize(Integer.parseInt(env.getProperty("connection.pool.initialPoolSize")));
+        myDataSource.setMinPoolSize(Integer.parseInt(env.getProperty("connection.pool.minPoolSize")));
+        myDataSource.setMaxPoolSize(Integer.parseInt(env.getProperty("connection.pool.maxPoolSize")));
+        myDataSource.setMaxIdleTime(Integer.parseInt(env.getProperty("connection.pool.maxIdleTime")));
+        return myDataSource;
+    }
 
-        return sessionFactory;
+//    @Bean
+//    public DataSource securityDataSource() {
+//        ComboPooledDataSource securityDataSource = new ComboPooledDataSource();
+//        try {
+//            securityDataSource.setDriverClass(env.getProperty("security.jdbc.driver"));
+//        } catch (PropertyVetoException exc) {
+//            throw new RuntimeException(exc);
+//        }
+//        logger.info(">>> security.jdbc.url=" + env.getProperty("security.jdbc.url"));
+//        logger.info(">>> security.jdbc.user=" + env.getProperty("security.jdbc.user"));
+//        securityDataSource.setJdbcUrl(env.getProperty("security.jdbc.url"));
+//        securityDataSource.setUser(env.getProperty("security.jdbc.user"));
+//        securityDataSource.setPassword(env.getProperty("security.jdbc.password"));
+//        securityDataSource.setInitialPoolSize(Integer.parseInt("security.connection.pool.initialPoolSize"));
+//        securityDataSource.setMinPoolSize(Integer.parseInt(("security.connection.pool.minPoolSize")));
+//        securityDataSource.setMaxPoolSize(Integer.parseInt(("security.connection.pool.maxPoolSize")));
+//        securityDataSource.setMaxIdleTime(Integer.parseInt(("security.connection.pool.maxIdleTime")));
+//        return securityDataSource;
+//    }
+
+
+    private Properties getHibernateProperties() {
+        Properties props = new Properties();
+        props.setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
+        props.setProperty("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
+        return props;
     }
 
     @Bean
-    public PlatformTransactionManager hibernateTransactionManager() throws PropertyVetoException {
-        HibernateTransactionManager transactionManager
-                = new HibernateTransactionManager();
-        transactionManager.setSessionFactory(sessionFactory().getObject());
-        return transactionManager;
+    public LocalSessionFactoryBean sessionFactory(){
+        LocalSessionFactoryBean sessionFactory = new
+                LocalSessionFactoryBean();
+        sessionFactory.setDataSource(myDataSource());
+        sessionFactory.setPackagesToScan(env.getProperty("hibernate.packagesToScan"));
+        sessionFactory.setHibernateProperties(getHibernateProperties());
+        return sessionFactory;
     }
 
-    private Properties hibernateProperties() {
-        Properties hibernateProperties = new Properties();
-        hibernateProperties.setProperty(
-                "hibernate.show_sql", "true");
-        hibernateProperties.setProperty(
-                "hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+//    @Bean
+//    public LocalSessionFactoryBean sessionFactory() throws PropertyVetoException {
+//        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+//        sessionFactory.setDataSource(dataSource());
+//        sessionFactory.setPackagesToScan("com.spring.entity");
+//        sessionFactory.setHibernateProperties(hibernateProperties());
+//
+//        return sessionFactory;
+//    }
 
-        return hibernateProperties;
+    @Bean
+    @Autowired
+    public HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
+        HibernateTransactionManager txManager = new
+                HibernateTransactionManager();
+        txManager.setSessionFactory(sessionFactory);
+        return txManager;
     }
+
+
+
+//    private Properties hibernateProperties() {
+//        Properties hibernateProperties = new Properties();
+//        hibernateProperties.setProperty(
+//                "hibernate.show_sql", "true");
+//        hibernateProperties.setProperty(
+//                "hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+//
+//        return hibernateProperties;
+//    }
 
 
 

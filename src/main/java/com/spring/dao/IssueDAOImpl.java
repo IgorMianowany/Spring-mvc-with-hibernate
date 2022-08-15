@@ -23,10 +23,12 @@ public class IssueDAOImpl implements IssueDAO {
     public List<Issue> getIssues() {
         Session session = sessionFactory.getCurrentSession();
 
-        String queryString = "from Issue order by id" ;
-        Query<Issue> theQuery = session.createQuery(queryString, Issue.class);
+        return session.createQuery("from Issue", Issue.class).getResultList();
 
-        return theQuery.getResultList();
+//        String queryString = "from Issue";
+//        Query<Issue> theQuery = session.createQuery(queryString, Issue.class);
+//
+//        return theQuery.getResultList();
     }
 
     @Override
