@@ -44,10 +44,10 @@
                     <td><form:input path="description"/></td>
                 </tr>
 
-                <tr>
-                    <td><label>Your id:</label></td>
-                    <td><form:input path="customer"/></td>
-                </tr>
+<%--                <tr>--%>
+<%--                    <td><label>Your id:</label></td>--%>
+<%--                    <td><form:input path="customer"/></td>--%>
+<%--                </tr>--%>
 
                 <tr>
                     <td><label>Status:</label></td>

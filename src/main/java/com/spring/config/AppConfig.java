@@ -28,7 +28,7 @@ import org.springframework.context.annotation.PropertySource;
 @ComponentScan(basePackages = "com.spring")
 @EnableAspectJAutoProxy
 @EnableTransactionManagement
-@PropertySource({"classpath:persistence-mysql.properties", "classpath:security-persistence-mysql.properties"})
+@PropertySource("classpath:persistence-mysql.properties")
 public class AppConfig implements WebMvcConfigurer {
 
     @Autowired
@@ -67,26 +67,26 @@ public class AppConfig implements WebMvcConfigurer {
 //        return dataSource;
 //    }
 
-    @Bean
-    public DataSource myDataSource() {
-        ComboPooledDataSource myDataSource = new ComboPooledDataSource();
-        try {
-            myDataSource.setDriverClass("com.mysql.jdbc.Driver");
-        }
-        catch (PropertyVetoException exc) {
-            throw new RuntimeException(exc);
-        }
-        logger.info("jdbc.url=" + env.getProperty("jdbc.url"));
-        logger.info("jdbc.user=" + env.getProperty("jdbc.user"));
-        myDataSource.setJdbcUrl(env.getProperty("jdbc.url"));
-        myDataSource.setUser(env.getProperty("jdbc.user"));
-        myDataSource.setPassword(env.getProperty("jdbc.password"));
-        myDataSource.setInitialPoolSize(Integer.parseInt(env.getProperty("connection.pool.initialPoolSize")));
-        myDataSource.setMinPoolSize(Integer.parseInt(env.getProperty("connection.pool.minPoolSize")));
-        myDataSource.setMaxPoolSize(Integer.parseInt(env.getProperty("connection.pool.maxPoolSize")));
-        myDataSource.setMaxIdleTime(Integer.parseInt(env.getProperty("connection.pool.maxIdleTime")));
-        return myDataSource;
-    }
+//    @Bean
+//    public DataSource myDataSource() {
+//        ComboPooledDataSource myDataSource = new ComboPooledDataSource();
+//        try {
+//            myDataSource.setDriverClass("com.mysql.jdbc.Driver");
+//        }
+//        catch (PropertyVetoException exc) {
+//            throw new RuntimeException(exc);
+//        }
+//        logger.info("jdbc.url=" + env.getProperty("jdbc.url"));
+//        logger.info("jdbc.user=" + env.getProperty("jdbc.user"));
+//        myDataSource.setJdbcUrl(env.getProperty("jdbc.url"));
+//        myDataSource.setUser(env.getProperty("jdbc.user"));
+//        myDataSource.setPassword(env.getProperty("jdbc.password"));
+//        myDataSource.setInitialPoolSize(Integer.parseInt(env.getProperty("connection.pool.initialPoolSize")));
+//        myDataSource.setMinPoolSize(Integer.parseInt(env.getProperty("connection.pool.minPoolSize")));
+//        myDataSource.setMaxPoolSize(Integer.parseInt(env.getProperty("connection.pool.maxPoolSize")));
+//        myDataSource.setMaxIdleTime(Integer.parseInt(env.getProperty("connection.pool.maxIdleTime")));
+//        return myDataSource;
+//    }
 
 //    @Bean
 //    public DataSource securityDataSource() {
@@ -101,12 +101,56 @@ public class AppConfig implements WebMvcConfigurer {
 //        securityDataSource.setJdbcUrl(env.getProperty("security.jdbc.url"));
 //        securityDataSource.setUser(env.getProperty("security.jdbc.user"));
 //        securityDataSource.setPassword(env.getProperty("security.jdbc.password"));
-//        securityDataSource.setInitialPoolSize(Integer.parseInt("security.connection.pool.initialPoolSize"));
-//        securityDataSource.setMinPoolSize(Integer.parseInt(("security.connection.pool.minPoolSize")));
-//        securityDataSource.setMaxPoolSize(Integer.parseInt(("security.connection.pool.maxPoolSize")));
-//        securityDataSource.setMaxIdleTime(Integer.parseInt(("security.connection.pool.maxIdleTime")));
+//        securityDataSource.setInitialPoolSize(getIntProperty("connection.pool.initialPoolSize"));
+//        securityDataSource.setMinPoolSize(getIntProperty("connection.pool.minPoolSize"));
+//        securityDataSource.setMaxPoolSize(getIntProperty("connection.pool.maxPoolSize"));
+//        securityDataSource.setMaxIdleTime(getIntProperty("connection.pool.maxIdleTime"));
 //        return securityDataSource;
 //    }
+
+    @Bean
+    public DataSource securityDataSource() {
+
+        // create connection pool
+        ComboPooledDataSource securityDataSource = new ComboPooledDataSource();
+
+        // set the jdbc driver
+        try {
+            securityDataSource.setDriverClass("com.mysql.jdbc.Driver");
+        }
+        catch (PropertyVetoException exc) {
+            throw new RuntimeException(exc);
+        }
+
+        // for sanity's sake, let's log url and user ... just to make sure we are reading the data
+        logger.info("jdbc.url=" + env.getProperty("jdbc.url"));
+        logger.info("jdbc.user=" + env.getProperty("jdbc.user"));
+
+        // set database connection props
+        securityDataSource.setJdbcUrl(env.getProperty("jdbc.url"));
+        securityDataSource.setUser(env.getProperty("jdbc.user"));
+        securityDataSource.setPassword(env.getProperty("jdbc.password"));
+
+        // set connection pool props
+        securityDataSource.setInitialPoolSize(getIntProperty("connection.pool.initialPoolSize"));
+
+        securityDataSource.setMinPoolSize(getIntProperty("connection.pool.minPoolSize"));
+
+        securityDataSource.setMaxPoolSize(getIntProperty("connection.pool.maxPoolSize"));
+
+        securityDataSource.setMaxIdleTime(getIntProperty("connection.pool.maxIdleTime"));
+
+        return securityDataSource;
+    }
+
+    private int getIntProperty(String propName) {
+
+        String propVal = env.getProperty(propName);
+
+        // now convert to int
+
+        return Integer.parseInt(propVal);
+    }
 
 
     private Properties getHibernateProperties() {
@@ -120,7 +164,7 @@ public class AppConfig implements WebMvcConfigurer {
     public LocalSessionFactoryBean sessionFactory(){
         LocalSessionFactoryBean sessionFactory = new
                 LocalSessionFactoryBean();
-        sessionFactory.setDataSource(myDataSource());
+        sessionFactory.setDataSource(securityDataSource());
         sessionFactory.setPackagesToScan(env.getProperty("hibernate.packagesToScan"));
         sessionFactory.setHibernateProperties(getHibernateProperties());
         return sessionFactory;

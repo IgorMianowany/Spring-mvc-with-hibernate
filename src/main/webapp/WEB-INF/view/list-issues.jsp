@@ -84,10 +84,6 @@
     <hr>
 
     <p>
-        <a href="${pageContext.request.contextPath}/customer/leaders">Leadership meeting</a>
-        <br>
-        <a href="${pageContext.request.contextPath}/customer/systems">Admin meeting</a>
-        <br>
         <a href="${pageContext.request.contextPath}/customer/list">Customer list</a>
     </p>
 

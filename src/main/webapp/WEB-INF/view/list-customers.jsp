@@ -100,10 +100,6 @@
     <hr>
 
     <p>
-        <a href="${pageContext.request.contextPath}/customer/leaders">Leadership meeting</a>
-        <br>
-        <a href="${pageContext.request.contextPath}/customer/systems">Admin meeting</a>
-        <br>
         <a href="${pageContext.request.contextPath}/issue/list">Issues</a>
     </p>
 
