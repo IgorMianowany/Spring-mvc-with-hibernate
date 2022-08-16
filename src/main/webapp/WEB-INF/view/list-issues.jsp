@@ -23,11 +23,9 @@
     </div>
     <div id="container">
         <hr>
-        <p>
-            User: <security:authentication property="principal.username"/>
-            <br><br>
-            Role (s): <security:authentication property="principal.authorities"/>
-        </p>
+        <security:authorize access="isAuthenticated()">
+            Logged in as <security:authentication property="principal.username" />
+        </security:authorize>
         <hr>
         <div id="content">
 
@@ -48,7 +46,7 @@
                 <tr>
                     <th><a>ID</a></th>
                     <th><a>Description</a></th>
-                    <th><a>Customer Name</a></th>
+                    <th><a>User Name</a></th>
                     <th>Status</th>
                     <th>Action</th>
                 </tr>
@@ -66,14 +64,14 @@
                     <tr>
                         <td> ${issue.id}</td>
                         <td> ${issue.description}</td>
-                        <td> ${issue.customer.firstName} ${issue.customer.lastName}</td>
+                        <td> ${issue.customer}</td>
                         <td> ${issue.status}</td>
                         <td>
-                            <a href="${updateLink}">Update</a>
-                             |
-                            <a href="${deleteLink}"
-                                onclick="if(!(confirm('Are you sure you want to delete this issue?')))return false">
-                                Delete</a>
+                            <security:authorize access="hasAnyRole('${issue.customer}', 'ADMIN')">
+                                <a href="${updateLink}"> Update</a>
+                                |
+                                <a href="${deleteLink}" onclick="if(!(confirm('Are you sure you want to delete this issue?')))return false">Delete</a>
+                            </security:authorize>
                         </td>
                     </tr>
                 </c:forEach>

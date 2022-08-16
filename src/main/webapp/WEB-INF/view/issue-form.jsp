@@ -44,11 +44,10 @@
                     <td><form:input path="description"/></td>
                 </tr>
 
-<%--                <tr>--%>
-<%--                    <td><label>Your id:</label></td>--%>
-<%--                    <td><form:input path="customer"/></td>--%>
-<%--                </tr>--%>
-
+                <tr>
+                    <td><label>Your name:</label></td>
+                    <td><form:input path="customer"/></td>
+                </tr>
                 <tr>
                     <td><label>Status:</label></td>
                     <form:select path = "status">
@@ -58,7 +57,7 @@
                 </tr>
 
                 <tr>
-                    <td><label></label></td>
+                    <td><label></label  ></td>
                     <td><input type="submit" value="Save" class="save"/></td>
                 </tr>
             </tbody>

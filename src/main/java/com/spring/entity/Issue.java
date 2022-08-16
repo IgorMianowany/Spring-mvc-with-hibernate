@@ -18,10 +18,12 @@ public class Issue {
     @Column(name = "description")
     private String description;
 
-    @JoinColumn(name="customer_id")
-    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH})
-    private Customer customer;
+//    @JoinColumn(name="customer_id")
+//    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+//            CascadeType.DETACH, CascadeType.REFRESH})
+//    private Customer customer;
+    @Column(name = "user_username")
+    private String customer;
 
     @Column(name = "status")
     private String status;
@@ -29,7 +31,7 @@ public class Issue {
     public Issue() {
     }
 
-    public Issue(int id, String description, Customer customer, String status) {
+    public Issue(int id, String description, String customer, String status) {
         this.id = id;
         this.description = description;
         this.customer = customer;
@@ -62,13 +64,14 @@ public class Issue {
         this.description = description;
     }
 
-    public Customer getCustomer() {
+    public String getCustomer() {
         return customer;
     }
 
-    public void setCustomer(int id) {
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
-        this.customer = context.getBean(Customer.class,id);
+    public void setCustomer(String customer) {
+//        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+//        this.customer = context.getBean(Customer.class,id);
+        this.customer = customer;
     }
 
     public String getStatus() {

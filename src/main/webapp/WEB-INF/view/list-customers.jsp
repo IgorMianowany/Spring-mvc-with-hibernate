@@ -25,9 +25,9 @@
     <div id="container">
         <hr>
         <p>
-            User: <security:authentication property="principal.username"/>
-            <br><br>
-            Role (s): <security:authentication property="principal.authorities"/>
+            <security:authorize access="isAuthenticated()">
+                Logged in as <security:authentication property="principal.username" />
+            </security:authorize>
         </p>
         <hr>
         <div id="content">

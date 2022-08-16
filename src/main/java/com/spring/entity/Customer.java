@@ -36,6 +36,10 @@ public class Customer {
         return firstName;
     }
 
+    public String getLowerFirstName() {
+        return firstName.toLowerCase();
+    }
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
