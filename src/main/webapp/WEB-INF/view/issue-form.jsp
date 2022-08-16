@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: fimia
-  Date: 02.08.2022
-  Time: 17:08
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
@@ -30,11 +23,9 @@
 
 <div>
 
-
     <h3>
-        Save customer
+        Save issue
     </h3>
-
     <form:form action="saveIssue" modelAttribute="issue" method="post">
         <form:hidden path="id"/>
         <table>
@@ -43,24 +34,23 @@
                     <td><label>Description:</label></td>
                     <td><form:input path="description"/></td>
                 </tr>
-
                 <tr>
                     <td><label>Your name:</label></td>
                     <td><form:input path="customer"/></td>
                 </tr>
                 <tr>
                     <td><label>Status:</label></td>
-                    <form:select path = "status">
+                    <td><form:select path = "status">
                         <form:option value = "OPEN" label = "OPEN"/>
                         <form:option value = "CLOSED" label = "CLOSED"/>
-                    </form:select>
+                    </form:select></td>
                 </tr>
-
                 <tr>
-                    <td><label></label  ></td>
+                    <td><label></label></td>
                     <td><input type="submit" value="Save" class="save"/></td>
                 </tr>
             </tbody>
+
         </table>
     </form:form>
 
