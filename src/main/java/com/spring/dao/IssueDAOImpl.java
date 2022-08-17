@@ -54,7 +54,7 @@ public class IssueDAOImpl implements IssueDAO {
         Query query = null;
 
         if(!searchName.isBlank()){
-            query = session.createQuery("from Issue where lower(description) like :searchName", Issue.class);
+            query = session.createQuery("from Issue where lower(description) like :searchName OR lower(customer) like :searchName", Issue.class);
             query.setParameter("searchName", "%" + searchName.toLowerCase() + "%");
 
         }

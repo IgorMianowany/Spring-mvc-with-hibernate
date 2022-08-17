@@ -35,6 +35,9 @@
                     <td><form:input path="description"/></td>
                 </tr>
                 <tr>
+                   <form:hidden path="customer"/>
+                </tr>
+                <tr>
                     <td><label>Status:</label></td>
                     <td><form:select path = "status">
                         <form:option value = "OPEN" label = "OPEN"/>
