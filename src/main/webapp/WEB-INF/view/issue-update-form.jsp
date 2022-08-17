@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: fimia
-  Date: 02.08.2022
-  Time: 17:08
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
@@ -23,49 +16,44 @@
   <div id="wrapper">
       <div id="header">
             <h2>
-                CRM - Customer Relationship Manager
+                Issue database
             </h2>
       </div>
   </div>
 
 <div>
 
-
     <h3>
-        Save customer
+        Save issue
     </h3>
-
-    <form:form action="saveCustomer" modelAttribute="customer" method="post">
+    <form:form action="saveIssue" modelAttribute="issue" method="post">
         <form:hidden path="id"/>
         <table>
             <tbody>
                 <tr>
-                    <td><label>First name:</label></td>
-                    <td><form:input path="firstName"/></td>
+                    <td><label>Description:</label></td>
+                    <td><form:input path="description"/></td>
                 </tr>
-
                 <tr>
-                    <td><label>Last name:</label></td>
-                    <td><form:input path="lastName"/></td>
+                    <td><label>Status:</label></td>
+                    <td><form:select path = "status">
+                        <form:option value = "OPEN" label = "OPEN"/>
+                        <form:option value = "CLOSED" label = "CLOSED"/>
+                    </form:select></td>
                 </tr>
-
-                <tr>
-                    <td><label>Role:</label></td>
-                    <td><form:input path="role"/></td>
-                </tr>
-
                 <tr>
                     <td><label></label></td>
                     <td><input type="submit" value="Save" class="save"/></td>
                 </tr>
             </tbody>
+
         </table>
     </form:form>
 
     <div style="clear; both;"> </div>
 
     <p>
-        <a href="${pageContext.request.contextPath}/customer/list">Back to list</a>
+        <a href="${pageContext.request.contextPath}/issue/list">Back to list</a>
     </p>
 
 </div>

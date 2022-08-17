@@ -1,6 +1,5 @@
 package com.spring.service;
 
-import com.spring.dao.RoleDao;
 import com.spring.dao.UserDAO;
 import com.spring.entity.CRMUser;
 import com.spring.entity.Role;
@@ -16,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,6 +31,16 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public User findByUserName(String userName) {
         return userDao.findUserByName(userName);
+    }
+
+    @Override
+    public List<User> getUsers() {
+        return userDao.getUsers();
+    }
+
+    @Override
+    public User getUser(int id) {
+        return userDao.getUser(id);
     }
 
     @Override

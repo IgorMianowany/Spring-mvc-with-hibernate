@@ -82,7 +82,7 @@
     <hr>
 
     <p>
-        <a href="${pageContext.request.contextPath}/customer/list">Customer list</a>
+        <a href="${pageContext.request.contextPath}/user/list">User list</a>
     </p>
 
     <hr>

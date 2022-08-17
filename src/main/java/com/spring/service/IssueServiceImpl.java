@@ -1,7 +1,6 @@
 package com.spring.service;
 
 import com.spring.dao.IssueDAO;
-import com.spring.entity.Customer;
 import com.spring.entity.Issue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

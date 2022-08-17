@@ -1,10 +1,7 @@
 package com.spring.controller;
 
-import com.spring.entity.Customer;
 import com.spring.entity.Issue;
-import com.spring.service.CustomerService;
 import com.spring.service.IssueService;
-import com.spring.utils.SortUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +17,16 @@ public class IssueController {
 
     @Autowired
     private IssueService issueService;
+
+    @RequestMapping(value="{name}", method = RequestMethod.GET)
+    public @ResponseBody Issue getIssue(@PathVariable String name) {
+
+        Issue issue = new Issue();
+
+        issue.setCustomer(name);
+        issue.setId(20);
+        return issue;
+    }
 
     @RequestMapping("/list")
     public String listIssues(Model model){
@@ -63,7 +70,7 @@ public class IssueController {
         model.addAttribute("issue", issue);
 
         // send to form
-        return "issue-form";
+        return "issue-update-form";
     }
 
     @RequestMapping("/delete")

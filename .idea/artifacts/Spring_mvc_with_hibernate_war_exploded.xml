@@ -33,6 +33,9 @@
           <element id="library" level="project" name="Maven: jakarta.validation:jakarta.validation-api:3.0.0" />
           <element id="library" level="project" name="Maven: org.jboss.logging:jboss-logging:3.4.1.Final" />
           <element id="library" level="project" name="Maven: com.fasterxml:classmate:1.5.1" />
+          <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-mrbean:1.9.13" />
+          <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.9.13" />
+          <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-core-asl:1.9.13" />
           <element id="library" level="project" name="Maven: org.springframework:spring-orm:5.3.22" />
           <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:5.3.22" />
           <element id="library" level="project" name="Maven: org.hibernate.orm:hibernate-core:6.1.1.Final" />

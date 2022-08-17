@@ -1,8 +1,6 @@
 package com.spring.dao;
 
-import com.spring.entity.Customer;
 import com.spring.entity.Issue;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 

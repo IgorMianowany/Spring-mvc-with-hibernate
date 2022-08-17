@@ -1,14 +1,10 @@
 package com.spring.dao;
 
-import com.spring.entity.Customer;
 import com.spring.entity.Issue;
-import com.spring.utils.SortUtils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -30,6 +26,8 @@ public class IssueDAOImpl implements IssueDAO {
 //
 //        return theQuery.getResultList();
     }
+
+
 
     @Override
     public void saveIssue(Issue issue) {
