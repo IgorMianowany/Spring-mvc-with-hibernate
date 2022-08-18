@@ -107,4 +107,12 @@ public class IssueController {
         return principal.getName();
     }
 
+    @RequestMapping("/to_json")
+    public String getJson(){
+
+        issueService.getJson();
+
+        return "redirect:/issue/list";
+    }
+
 }

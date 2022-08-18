@@ -4,9 +4,14 @@ import com.spring.entity.Issue;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.sql.ResultSet;
 import java.util.List;
 
 @Repository
@@ -63,4 +68,39 @@ public class IssueDAOImpl implements IssueDAO {
         }
         return (List<Issue>) query.getResultList();
     }
+
+    @Override
+    public void getJson() {
+        Session session = sessionFactory.getCurrentSession();
+
+        String query = "from Issue";
+        List<Issue> issues = session.createQuery(query,Issue.class).getResultList();
+
+        JSONObject jsonObject = new JSONObject();
+
+        JSONArray array = new JSONArray();
+
+        issues.forEach(issue -> {
+            JSONObject record = new JSONObject();
+            record.put("id",issue.getId());
+            record.put("description",issue.getDescription());
+            record.put("customer",issue.getCustomer());
+            record.put("status",issue.getStatus());
+            array.add(record);
+        });
+
+        jsonObject.put("Issue_data", array);
+
+        FileWriter file = null;
+        try {
+            file = new FileWriter("C:/Users/fimia/Desktop/Javy springi i takie inne/json_output.json");
+            file.write(jsonObject.toJSONString());
+            file.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+
 }

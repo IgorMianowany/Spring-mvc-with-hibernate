@@ -15,5 +15,8 @@ public interface IssueService {
     void deleteIssue(int id);
 
     List<Issue> searchIssue(String searchName);
+
+    void getJson();
+
 }
 

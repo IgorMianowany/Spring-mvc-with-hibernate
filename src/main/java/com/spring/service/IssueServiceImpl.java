@@ -39,4 +39,9 @@ public class IssueServiceImpl implements IssueService {
     public List<Issue> searchIssue(String searchName) {
        return issueDAO.searchIssue(searchName);
     }
+
+    @Override
+    public void getJson() {
+        issueDAO.getJson();
+    }
 }
