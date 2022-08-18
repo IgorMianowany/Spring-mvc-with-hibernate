@@ -6,6 +6,9 @@ Spring security\
 Hibernate\
 MySQL\
 AspectJ
-
+Główne funkcje:\
+  -możliwość logowania i rejestracji\
+  -zarządzanie wpisami w bazie\
+  -zapisanie bazy do pliku JSON
 
 
