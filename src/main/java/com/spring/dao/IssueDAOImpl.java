@@ -101,6 +101,4 @@ public class IssueDAOImpl implements IssueDAO {
         }
 
     }
-
-
 }

@@ -30,16 +30,6 @@ public class Issue {
         this.status = status;
     }
 
-    @Override
-    public String toString() {
-        return "Issue{" +
-                "id=" + id +
-                ", description='" + description + '\'' +
-                ", customer=" + customer +
-                ", status='" + status + '\'' +
-                '}';
-    }
-
     public int getId() {
         return id;
     }
