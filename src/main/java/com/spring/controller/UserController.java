@@ -18,7 +18,6 @@ public class UserController {
 
     @RequestMapping("/list")
     public String listUsers(Model model){
-        // get customers from service
         List<User> users = userService.getUsers();
 
         model.addAttribute("users", users);

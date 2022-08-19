@@ -9,6 +9,12 @@
 <html>
 <head>
     <title>Instruction</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+
+    <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
 
@@ -17,7 +23,12 @@ Once you're logged in, you can add a new issue or update/delete the ones you alr
 From main part of a website you can move to user database where you can check all existing users. You can register a new user only from login page.<br>
 You can search issues via search bar above issue table, you can pass any string of characters and it will be checked against user who posted the issue or issue description. Search is case insensitive.<br>
 <br>
-<a href="${pageContext.request.contextPath}/showLoginPage">Back to login</a>
+<div>
+    <div>
+    <a href="${pageContext.request.contextPath}/showLoginPage" class="btn btn-primary" role="button" aria-pressed="true">Back to login</a>
+
+    </div>
+</div>
 
 
 </body>

@@ -93,7 +93,7 @@ public class IssueDAOImpl implements IssueDAO {
 
         FileWriter file = null;
         try {
-            file = new FileWriter("C:/Users/fimia/Desktop/Javy springi i takie inne/json_output.json");
+            file = new FileWriter("C:/Users/fimia/IdeaProjects/Spring-mvc-with-hibernate/src/main/resources/json_output.json");
             file.write(jsonObject.toJSONString());
             file.close();
         } catch (IOException e) {

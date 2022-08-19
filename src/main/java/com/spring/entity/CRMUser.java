@@ -1,5 +1,11 @@
 package com.spring.entity;
 
+/**
+ * Class used for login/register
+ * Not a hibernate entity
+ */
+
+
 import com.spring.validation.FieldMatch;
 import com.spring.validation.ValidEmail;
 import javax.validation.constraints.NotNull;

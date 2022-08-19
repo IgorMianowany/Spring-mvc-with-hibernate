@@ -24,7 +24,7 @@
 <div>
 
     <h3>
-        Save issue
+        Update issue
     </h3>
     <form:form action="saveIssue" modelAttribute="issue" method="post">
         <form:hidden path="id"/>

@@ -83,6 +83,7 @@
 
     <p>
         <a href="${pageContext.request.contextPath}/user/list">User list</a>
+        <a href="${pageContext.request.contextPath}/issue">Click here to download json</a>
     </p>
 
     <hr>
