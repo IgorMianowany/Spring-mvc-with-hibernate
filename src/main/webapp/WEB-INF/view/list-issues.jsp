@@ -59,6 +59,10 @@
                         <c:param name="issueId" value="${issue.id}"/>
                     </c:url>
 
+                    <c:url var="closeLink" value="/issue/showFormForIssueClose">
+                        <c:param name="issueId" value="${issue.id}"/>
+                    </c:url>
+
 
 
                     <tr>
@@ -67,11 +71,15 @@
                         <td> ${issue.customer}</td>
                         <td> ${issue.status}</td>
                         <td>
+                            <a href="${closeLink}">Change status</a>
+
                             <security:authorize access="hasAnyRole('${issue.customer}', 'ADMIN')">
+                                |
                                 <a href="${updateLink}"> Update</a>
                                 |
                                 <a href="${deleteLink}" onclick="if(!(confirm('Are you sure you want to delete this issue?')))return false">Delete</a>
                             </security:authorize>
+
                         </td>
                     </tr>
                 </c:forEach>
@@ -82,7 +90,9 @@
     <hr>
 
     <p>
-        <a href="${pageContext.request.contextPath}/user/list">User list</a>
+        <security:authorize access="hasAnyRole('ADMIN')">
+            <a href="${pageContext.request.contextPath}/user/list">User list</a>
+        </security:authorize>
     </p>
     <p>
         <a href="${pageContext.request.contextPath}/issue">Download json</a>

@@ -79,6 +79,19 @@ public class IssueController {
         return "issue-update-form";
     }
 
+    @RequestMapping("/showFormForIssueClose")
+    public String showFormForClose(@RequestParam("issueId") int id, Model model){
+
+        // get customer from service
+        Issue issue = issueService.getIssue(id);
+
+        // set customer as a model attribute to prepopulate form
+        model.addAttribute("issue", issue);
+
+        // send to form
+        return "issue-close-form";
+    }
+
     @RequestMapping("/delete")
     public String deleteIssue(@RequestParam("issueId") int id){
         issueService.deleteIssue(id);
