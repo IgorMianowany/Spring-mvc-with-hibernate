@@ -36,6 +36,13 @@ public class AppConfig implements WebMvcConfigurer {
 
     private final Logger logger = Logger.getLogger(getClass().getName());
 
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry){
+        registry
+                .addResourceHandler("/resources/**")
+                .addResourceLocations("/resources/");
+    }
+
     @Bean
     public ViewResolver viewResolver(){
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
@@ -46,20 +53,11 @@ public class AppConfig implements WebMvcConfigurer {
         return viewResolver;
     }
 
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry){
-        registry
-                .addResourceHandler("/resources/**")
-                .addResourceLocations("/resources/");
-    }
-
-
     @Bean
     public DataSource securityDataSource() {
 
         // create connection pool
         ComboPooledDataSource securityDataSource = new ComboPooledDataSource();
-
         // set the jdbc driver
         try {
             securityDataSource.setDriverClass("com.mysql.jdbc.Driver");
@@ -67,8 +65,6 @@ public class AppConfig implements WebMvcConfigurer {
         catch (PropertyVetoException exc) {
             throw new RuntimeException(exc);
         }
-
-        // for sanity's sake, let's log url and user ... just to make sure we are reading the data
         logger.info("jdbc.url=" + env.getProperty("jdbc.url"));
         logger.info("jdbc.user=" + env.getProperty("jdbc.user"));
 
@@ -76,7 +72,6 @@ public class AppConfig implements WebMvcConfigurer {
         securityDataSource.setJdbcUrl(env.getProperty("jdbc.url"));
         securityDataSource.setUser(env.getProperty("jdbc.user"));
         securityDataSource.setPassword(env.getProperty("jdbc.password"));
-
         // set connection pool props
         securityDataSource.setInitialPoolSize(getIntProperty("connection.pool.initialPoolSize"));
 
@@ -95,16 +90,10 @@ public class AppConfig implements WebMvcConfigurer {
 
         // now convert to int
 
+        assert propVal != null;
         return Integer.parseInt(propVal);
     }
 
-
-    private Properties getHibernateProperties() {
-        Properties props = new Properties();
-        props.setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
-        props.setProperty("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
-        return props;
-    }
 
     @Bean
     public LocalSessionFactoryBean sessionFactory(){
@@ -114,6 +103,13 @@ public class AppConfig implements WebMvcConfigurer {
         sessionFactory.setPackagesToScan(env.getProperty("hibernate.packagesToScan"));
         sessionFactory.setHibernateProperties(getHibernateProperties());
         return sessionFactory;
+    }
+
+    private Properties getHibernateProperties() {
+        Properties props = new Properties();
+        props.setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
+        props.setProperty("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
+        return props;
     }
 
     @Bean
